@@ -15,11 +15,15 @@ from time import sleep, time
 from datetime import datetime
 from copy import deepcopy
 from termcolor import colored
+from pynput import keyboard
 import os
 import sys
 import signal
 import subprocess
+import atexit
 
+def clearscreen():
+    os.system('clear && printf \'\e[3J\'')
 
 # wrapper for random.randint() --> avoids errors with float args
 def randint(a,b):
@@ -278,7 +282,7 @@ class Window(object):
         self.aquarium_box_background = []
 
         # clear screen
-        os.system('clear')
+        clearscreen()
 
         # create blank aquarium box
         for y in range(self.height):
@@ -2290,6 +2294,9 @@ coral_list = BG_Kelp + MG_Kelp + FG_Kelp + MG_BrainCoral + MG_TreeCoral
 
 # Hide the cursor
 os.system('echo -ne "\x1b[?25l"')
+
+
+atexit.register(clearscreen)
 
 while True:
     # ocean currents move all the swimmers
